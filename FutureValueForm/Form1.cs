@@ -19,10 +19,10 @@ namespace FutureValueForm
 
         private void btnCalculate_Click(object sender, EventArgs e)
         {
-            try //try-catch error that catches exceptions for the ToDecimal method of the Convert class
-            { 
+            try
+            {
                 decimal monthlyInvestment = //Conversion of the txtMonthlyInvestment to and txtInterestRate to decimal and txtYears to int
-                Convert.ToDecimal(txtMonthlyInvestment.Text);
+                    Convert.ToDecimal(txtMonthlyInvestment.Text);
                 decimal yearlyInterestRate = Convert.ToDecimal(txtInterestRate.Text);
                 int years = Convert.ToInt32(txtYears.Text);
 
@@ -30,20 +30,24 @@ namespace FutureValueForm
                 decimal monthlyInterestRate = yearlyInterestRate / 12 / 100;
                 //dividing the yearlyInterestRate by 12 and then a 100 to get a decimal monthlyInterestRate
                 decimal futureValue = 0m; //initiating the decimal futureValue to 0.0
-                for (int i = 0; i < months; i++) //for loop that starts at 0 if the bolean expression is less than months and the Increment expression is adding 1
-                {
-                    futureValue = (futureValue + monthlyInterestRate)//futureValue is equal to futureValue plus monthlyInterestRate
-                                * (1 + monthlyInterestRate);//then multiplied by 1 plus monthlyInterestRate
-                }
+
                 txtFutureValue.Text = futureValue.ToString("c");//the txtFutureValue text will be converted to a string in currency
                 txtMonthlyInvestment.Focus();//the focus is set to txtMonthlyInvestement where result will appear
+                throw new Exception("An unknown exception occurred."); //throw exception
             }
-            catch
+            catch(FormatException) //a specific exception
             {
-                MessageBox.Show("Please enter a valid number.", "Entry Error");
+                MessageBox.Show("A format exception has occurred. Please check all entries.", "Entry Error");
+            }
+            catch(OverflowException) //another specific exception
+            {
+                MessageBox.Show("An overflow exception has occurred.  Please enter small value", "Entry Error");
+            }
+            catch (Exception ex) //all other exceptions
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.GetType().ToString() + "\n" + ex.StackTrace, "Exception");
             }
         }
-
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();//closes form

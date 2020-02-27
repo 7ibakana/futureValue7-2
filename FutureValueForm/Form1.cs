@@ -29,11 +29,10 @@ namespace FutureValueForm
                 int months = years * 12; //showing the years in int months by multiplying the years by 12
                 decimal monthlyInterestRate = yearlyInterestRate / 12 / 100;
                 //dividing the yearlyInterestRate by 12 and then a 100 to get a decimal monthlyInterestRate
-                decimal futureValue = 0m; //initiating the decimal futureValue to 0.0
+                decimal futureValue = CalculateFutureValue(monthlyInvestment, monthlyInterestRate, months);
 
                 txtFutureValue.Text = futureValue.ToString("c");//the txtFutureValue text will be converted to a string in currency
                 txtMonthlyInvestment.Focus();//the focus is set to txtMonthlyInvestement where result will appear
-                throw new Exception("An unknown exception occurred."); //throw exception
             }
             catch(FormatException) //a specific exception
             {
@@ -51,6 +50,17 @@ namespace FutureValueForm
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();//closes form
+        }
+        private decimal CalculateFutureValue(decimal monthlyInvestment, decimal monthlyInterestRate, int months)
+        {
+            decimal futureValue = 0m;
+            for (int i = 0; i < months; i++)
+            {
+                futureValue = (futureValue + monthlyInvestment) * (1 + monthlyInterestRate);
+                throw new Exception("An unknown exception occurred."); //throw exception
+            }
+            return futureValue;
+            
         }
     }
 }

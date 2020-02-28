@@ -21,7 +21,7 @@ namespace FutureValueForm
         {
             try
             {
-                if (IsValidData())
+                if (IsValidData()) //Calls the IsValid validation method to be executed
                 {
                     decimal monthlyInvestment = //Conversion of the txtMonthlyInvestment to and txtInterestRate to decimal and txtYears to int
                         Convert.ToDecimal(txtMonthlyInvestment.Text);

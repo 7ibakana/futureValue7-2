@@ -21,26 +21,21 @@ namespace FutureValueForm
         {
             try
             {
-                decimal monthlyInvestment = //Conversion of the txtMonthlyInvestment to and txtInterestRate to decimal and txtYears to int
-                    Convert.ToDecimal(txtMonthlyInvestment.Text);
-                decimal yearlyInterestRate = Convert.ToDecimal(txtInterestRate.Text);
-                int years = Convert.ToInt32(txtYears.Text);
+                if (IsValidData())
+                {
+                    decimal monthlyInvestment = //Conversion of the txtMonthlyInvestment to and txtInterestRate to decimal and txtYears to int
+                        Convert.ToDecimal(txtMonthlyInvestment.Text);
+                    decimal yearlyInterestRate = Convert.ToDecimal(txtInterestRate.Text);
+                    int years = Convert.ToInt32(txtYears.Text);
 
-                int months = years * 12; //showing the years in int months by multiplying the years by 12
-                decimal monthlyInterestRate = yearlyInterestRate / 12 / 100;
-                //dividing the yearlyInterestRate by 12 and then a 100 to get a decimal monthlyInterestRate
-                decimal futureValue = CalculateFutureValue(monthlyInvestment, monthlyInterestRate, months);
+                    int months = years * 12; //showing the years in int months by multiplying the years by 12
+                    decimal monthlyInterestRate = yearlyInterestRate / 12 / 100;
+                    //dividing the yearlyInterestRate by 12 and then a 100 to get a decimal monthlyInterestRate
+                    decimal futureValue = CalculateFutureValue(monthlyInvestment, monthlyInterestRate, months);
 
-                txtFutureValue.Text = futureValue.ToString("c");//the txtFutureValue text will be converted to a string in currency
-                txtMonthlyInvestment.Focus();//the focus is set to txtMonthlyInvestement where result will appear
-            }
-            catch(FormatException) //a specific exception
-            {
-                MessageBox.Show("A format exception has occurred. Please check all entries.", "Entry Error");
-            }
-            catch(OverflowException) //another specific exception
-            {
-                MessageBox.Show("An overflow exception has occurred.  Please enter small value", "Entry Error");
+                    txtFutureValue.Text = futureValue.ToString("c");//the txtFutureValue text will be converted to a string in currency
+                    txtMonthlyInvestment.Focus();//the focus is set to txtMonthlyInvestement where result will appear
+                }
             }
             catch (Exception ex) //all other exceptions
             {
@@ -61,6 +56,68 @@ namespace FutureValueForm
             }
             return futureValue;
             
+        }
+        public bool IsPresent(TextBox textBox, string name)
+        {
+            if (textBox.Text == "")
+            {
+                MessageBox.Show(name + " is a required field.", "Entry Error");
+                textBox.Focus();
+                return false;
+            }
+            return true;
+        }
+        public bool IsDecimal(TextBox textBox, string name0)
+        {
+            decimal number = 0m;
+            if (Decimal.TryParse(textBox.Text, out number))
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show(Name + " must be a deimcal value.", "Entry Error");
+                textBox.Focus();
+                return false;
+            }
+        }
+        public bool isInt32(TextBox textBox, string name)
+        {
+            int number = 0;
+            if (Int32.TryParse(textBox.Text, out number))
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show(name + " must be an integer.", "Entry Error");
+                textBox.Focus();
+                return false;
+            }
+        }
+        public bool IsWithinRange(TextBox textBox, string name, decimal min, decimal max)
+        {
+            decimal number = Convert.ToDecimal(textBox.Text);
+            if (number < min || number > max)
+            {
+                MessageBox.Show(name + " must be between " + min + " and " + max + ".", "Entry Error");
+                textBox.Focus();
+                return false;
+            }
+            return true;
+        }
+        public bool IsValidData()
+        {
+            return
+                IsPresent(txtMonthlyInvestment, "Monthly Investment") &&
+                IsDecimal(txtMonthlyInvestment, "Monthly Investment") &&
+                IsWithinRange(txtMonthlyInvestment, "Monthly Investment", 1, 10000) &&
+                IsPresent(txtInterestRate, "Yearly Interest Rate") &&
+                IsDecimal(txtInterestRate, "Yearly Interest Rate") &&
+                IsWithinRange(txtInterestRate, "Yearly Interest Rate", 1, 40) &&
+                IsPresent(txtYears, "Number of Years") &&
+                IsDecimal(txtYears, "Number of Years") &&
+                IsWithinRange(txtYears, "Number of Years", 1, 20);
         }
     }
 }

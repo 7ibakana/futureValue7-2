@@ -23,7 +23,7 @@ namespace FutureValueForm
             {
                 if (IsValidData()) //Calls the IsValid validation method to be executed
                 {
-                    decimal monthlyInvestment = //Conversion of the txtMonthlyInvestment to and txtInterestRate to decimal and txtYears to int
+                    decimal monthlyInvestment = //Conversion of the txtMonthlyInvestment and txtInterestRate to decimal and txtYears to int
                         Convert.ToDecimal(txtMonthlyInvestment.Text);
                     decimal yearlyInterestRate = Convert.ToDecimal(txtInterestRate.Text);
                     int years = Convert.ToInt32(txtYears.Text);

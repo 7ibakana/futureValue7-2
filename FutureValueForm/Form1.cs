@@ -57,7 +57,7 @@ namespace FutureValueForm
             return futureValue;
             
         }
-        public bool IsPresent(TextBox textBox, string name)
+        public bool IsPresent(TextBox textBox, string name)//Generic validation for IsPresent method
         {
             if (textBox.Text == "")
             {
@@ -67,7 +67,7 @@ namespace FutureValueForm
             }
             return true;
         }
-        public bool IsDecimal(TextBox textBox, string name0)
+        public bool IsDecimal(TextBox textBox, string name0) //Generic validation for IsDecimal method
         {
             decimal number = 0m;
             if (Decimal.TryParse(textBox.Text, out number))
@@ -81,7 +81,7 @@ namespace FutureValueForm
                 return false;
             }
         }
-        public bool isInt32(TextBox textBox, string name)
+        public bool IsInt32(TextBox textBox, string name) //Generic validation for IsInt32 method
         {
             int number = 0;
             if (Int32.TryParse(textBox.Text, out number))
@@ -95,7 +95,7 @@ namespace FutureValueForm
                 return false;
             }
         }
-        public bool IsWithinRange(TextBox textBox, string name, decimal min, decimal max)
+        public bool IsWithinRange(TextBox textBox, string name, decimal min, decimal max) //Generic validation for IsWithinRange
         {
             decimal number = Convert.ToDecimal(textBox.Text);
             if (number < min || number > max)
@@ -106,7 +106,7 @@ namespace FutureValueForm
             }
             return true;
         }
-        public bool IsValidData()
+        public bool IsValidData() //IsValid method  thats calls the generic methods above
         {
             return
                 IsPresent(txtMonthlyInvestment, "Monthly Investment") &&

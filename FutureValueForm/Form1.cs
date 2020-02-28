@@ -52,7 +52,6 @@ namespace FutureValueForm
             for (int i = 0; i < months; i++)
             {
                 futureValue = (futureValue + monthlyInvestment) * (1 + monthlyInterestRate);
-                throw new Exception("An unknown exception occurred."); //throw exception
             }
             return futureValue;
             
